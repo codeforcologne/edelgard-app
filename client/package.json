@@ -1,0 +1,46 @@
+{
+  "name": "edelgard-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.7.0",
+    "@material-ui/icons": "^4.5.1",
+    "@rehooks/device-orientation": "^1.0.0",
+    "@sentry/browser": "^5.9.1",
+    "axios": "^0.19.0",
+    "date-fns": "^2.8.1",
+    "haversine": "^1.1.1",
+    "humanize-duration": "^3.21.0",
+    "mapbox-gl": "^1.5.0",
+    "react": "^16.12.0",
+    "react-div-100vh": "^0.3.4",
+    "react-dom": "^16.12.0",
+    "react-mapbox-gl": "^4.7.3",
+    "react-scripts": "^3.2.0",
+    "typeface-open-sans-condensed": "0.0.72",
+    "typescript": "^3.7.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@types/haversine": "^1.1.4",
+    "@types/humanize-duration": "^3.18.0",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.12",
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4"
+  }
+}
