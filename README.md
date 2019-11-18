@@ -13,6 +13,8 @@ More than one hundred organizations and businesses in Cologne have agreed to ope
 This app assists the user in finding available protected spaces based on geolocation and business hours.
 It can then route the user to the place of their choice.
 
+A demo version of the app can be viewed at https://edelgard-test.netlify.com/
+
 ## Development
 
 The app currently requires an API token for the services of [Mapbox](https://www.mapbox.com/),
