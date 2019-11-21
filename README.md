@@ -21,7 +21,7 @@ The app currently requires an API token for the services of [Mapbox](https://www
 both for the map tiles and for routing requests.
 A token can be retrieved after creating a free [Mapbox account](https://account.mapbox.com/auth/signup/).
 
-Please create a file `.env.local` with the following contents.
+Please create a file named `.env.local` in the `client` directory with the following contents.
 
 ```shell
 REACT_APP_MAPBOX_TOKEN=yourtokenhere
