@@ -13,11 +13,15 @@ import LocationLayers from "./LocationLayers";
 import usePrevious from "../../hooks/usePrevious";
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
-
 if (!accessToken) {
   throw new Error(
     "Must provide Mapbox access token via environment variable REACT_APP_MAPBOX_TOKEN",
   );
+}
+
+const mapStyle = process.env.REACT_APP_MAP_STYLE_URL;
+if (!mapStyle) {
+  throw new Error("Must provide URL to map style as REACT_APP_MAP_STYLE_URL");
 }
 
 const MapboxMap = ReactMapboxGl({ accessToken });
@@ -144,7 +148,7 @@ export default function Map({
     <>
       <MapboxMap
         // eslint-disable-next-line react/style-prop-object
-        style="mapbox://styles/mapbox/light-v10"
+        style={mapStyle}
         containerStyle={{
           flex: 1,
           opacity: mapHasLoaded ? 1 : 0,
