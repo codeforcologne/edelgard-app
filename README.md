@@ -15,6 +15,8 @@ It can then route the user to the place of their choice.
 
 A demo version of the app can be viewed at https://edelgard-test.netlify.com/
 
+![Screenshot of the Edelgard app](https://edelgard-api-test.netlify.com/assets/screenshot.png)
+
 ## Development
 
 The app currently requires an API token for the services of [Mapbox](https://www.mapbox.com/),
