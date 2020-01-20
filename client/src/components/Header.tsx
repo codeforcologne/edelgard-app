@@ -64,7 +64,12 @@ export default ({
           EDELGARD <span className={classes.titleAddition}>map</span>
         </Typography>
         {isSearching ? (
-          <Button variant="outlined" color="inherit" onClick={goToOverview}>
+          <Button
+            title="Zurück zur Karte"
+            variant="outlined"
+            color="inherit"
+            onClick={goToOverview}
+          >
             <CloseIcon />
           </Button>
         ) : (

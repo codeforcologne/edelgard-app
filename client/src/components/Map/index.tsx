@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMapboxGl from "react-mapbox-gl";
+import * as MapboxGl from "mapbox-gl";
 
 import useCurrentMinute from "../../hooks/useCurrentMinute";
 
@@ -12,14 +13,21 @@ import PlaceLayers from "./PlaceLayers";
 import LocationLayers from "./LocationLayers";
 import usePrevious from "../../hooks/usePrevious";
 
-const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+declare global {
+  interface Window {
+    Cypress?: object;
+    mapboxGlMap: MapboxGl.Map;
+  }
+}
+
+const accessToken = process.env.REACT_APP_MAPBOX_TOKEN!;
 if (!accessToken) {
   throw new Error(
     "Must provide Mapbox access token via environment variable REACT_APP_MAPBOX_TOKEN",
   );
 }
 
-const mapStyle = process.env.REACT_APP_MAP_STYLE_URL;
+const mapStyle = process.env.REACT_APP_MAP_STYLE_URL!;
 if (!mapStyle) {
   throw new Error("Must provide URL to map style as REACT_APP_MAP_STYLE_URL");
 }
@@ -168,6 +176,10 @@ export default function Map({
         onStyleLoad={map => {
           map.resize();
           setMapHasLoaded(true);
+
+          if (window.Cypress) {
+            window.mapboxGlMap = map;
+          }
         }}
       >
         <>

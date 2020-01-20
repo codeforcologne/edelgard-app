@@ -29,6 +29,7 @@ export default function DisclaimerDialog() {
       open={!hasConfirmedTestDisclaimer}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      data-testid="disclaimer"
     >
       <DialogTitle id="alert-dialog-title">Hinweis</DialogTitle>
       <DialogContent>
