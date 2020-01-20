@@ -5,7 +5,10 @@ import { Place, distance } from "../places";
 import { hasLocation } from "./useViewReducer";
 import { useViewState } from "../components/ViewContext";
 
-export default function useSuggestedPlaces(places: Place[], maxNum: number) {
+export default function useSuggestedPlaces(
+  places: Place[],
+  maxNum: number,
+): [Place, number][] | null {
   const viewState = useViewState();
   const currentMinute = useCurrentMinute();
 
@@ -14,23 +17,15 @@ export default function useSuggestedPlaces(places: Place[], maxNum: number) {
       return null;
     }
 
-    const placesWithDistance = places.map(
-      place =>
-        [
-          place,
-          distance(
-            { lng: viewState.location[0], lat: viewState.location[1] },
-            place,
-          ),
-        ] as [Place, number],
+    const openPlaces = places.filter(
+      place => place.hours && getOpenState(place.hours, currentMinute).state,
     );
-    placesWithDistance.sort(
-      ([, distanceA], [, distanceB]) => distanceA - distanceB,
-    );
-    const openPlacesWithDistance = placesWithDistance.filter(
-      ([place]) =>
-        place.hours && getOpenState(place.hours, currentMinute).state,
-    );
+
+    const [lng, lat] = viewState.location;
+
+    const openPlacesWithDistance = openPlaces
+      .map(place => [place, distance({ lng, lat }, place)] as [Place, number])
+      .sort(([, distanceA], [, distanceB]) => distanceA - distanceB);
 
     return openPlacesWithDistance.slice(0, maxNum);
   }, [viewState, currentMinute, places, maxNum]);
