@@ -59,9 +59,9 @@ export default ({
       className={classes.appBar}
     >
       <Toolbar>
-        <img src={logoUrl} alt="Edelgard-Logo" className={classes.logo} />
+        <img src={logoUrl} alt="EDELGARD-Logo" className={classes.logo} />
         <Typography variant="h3" color="inherit" className={classes.title}>
-          Edelgard <span className={classes.titleAddition}>Test</span>
+          EDELGARD <span className={classes.titleAddition}>map</span>
         </Typography>
         {isSearching ? (
           <Button variant="outlined" color="inherit" onClick={goToOverview}>

@@ -1,10 +1,10 @@
-# Edelgard app
+# EDELGARD map
 
-A routing web app for the Edelgard project in Cologne, Germany
+A routing web app for the EDELGARD project in Cologne, Germany
 
 ## Background
 
-[Edelgard <sup>(de)</sup>](https://edelgard.koeln/) is a campaign by the [Cologne Initiative Against Sexualized Violence <sup>(de)</sup>](https://www.koelner-initiative-gegen-sexualisierte-gewalt.de/).
+[EDELGARD <sup>(de)</sup>](https://edelgard.koeln/) is a campaign by the [Cologne Initiative Against Sexualized Violence <sup>(de)</sup>](https://www.koelner-initiative-gegen-sexualisierte-gewalt.de/).
 Its goal is to improve protection for women and girls against sexualized violence in public spaces within Cologne, Germany.
 More than one hundred organizations and businesses in Cologne have agreed to open their doors for people seeking a protected space.
 
@@ -15,7 +15,7 @@ It can then route the user to the place of their choice.
 
 A demo version of the app can be viewed at https://edelgard-test.netlify.com/
 
-![Screenshot of the Edelgard app](https://edelgard-api-test.netlify.com/assets/screenshot.png)
+![Screenshot of the EDELGARD map](https://edelgard-api-test.netlify.com/assets/screenshot.png)
 
 ## Development
 
