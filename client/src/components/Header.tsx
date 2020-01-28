@@ -1,13 +1,16 @@
 import React from "react";
 
 import CloseIcon from "@material-ui/icons/Close";
+import HelpIcon from "@material-ui/icons/Help";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useViewState } from "./ViewContext";
+import HelpMenu from "./HelpMenu";
 
 const logoUrl = process.env.REACT_APP_LOGO_URL;
 
@@ -16,7 +19,7 @@ const useStyles = makeStyles({
     position: "absolute",
   },
   logo: {
-    marginRight: 16,
+    marginRight: 6,
     height: 48,
   },
   title: {
@@ -28,6 +31,9 @@ const useStyles = makeStyles({
   titleAddition: {
     fontWeight: "bold",
     fontSize: "0.8em",
+  },
+  searchButton: {
+    whiteSpace: "nowrap",
   },
 });
 
@@ -52,6 +58,10 @@ export default ({
 
   const classes = useStyles();
 
+  const [isHelpMenuOpen, setIsHelpMenuOpen] = React.useState(false);
+
+  const anchorRef = React.useRef();
+
   return (
     <AppBar
       position="static"
@@ -73,14 +83,29 @@ export default ({
             <CloseIcon />
           </Button>
         ) : (
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={suggestPlaces}
-            disabled={geolocationPermissionState === "denied"}
-          >
-            Schutz suchen
-          </Button>
+          <>
+            <IconButton
+              aria-label="Hilfe"
+              onClick={() => setIsHelpMenuOpen(true)}
+              ref={anchorRef as any}
+            >
+              <HelpIcon />
+            </IconButton>
+            <HelpMenu
+              open={isHelpMenuOpen}
+              setOpen={setIsHelpMenuOpen}
+              anchorEl={anchorRef.current}
+            />
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={suggestPlaces}
+              disabled={geolocationPermissionState === "denied"}
+              className={classes.searchButton}
+            >
+              Schutz suchen
+            </Button>
+          </>
         )}
       </Toolbar>
     </AppBar>
