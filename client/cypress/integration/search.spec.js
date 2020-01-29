@@ -3,8 +3,8 @@
 import places from "../fixtures/places";
 import userCoordinates from "../fixtures/userCoordinates";
 
-const closestOpenPlace = places[1];
-const secondClosestOpenPlace = places[2];
+const closestOpenPlace = places[2];
+const thirdClosestOpenPlace = places[4];
 
 describe("Place search", () => {
   beforeEach(() => {
@@ -26,9 +26,9 @@ describe("Place search", () => {
 
     cy.contains("Weitere Orte").click().should("not.exist");
 
-    cy.get("li:contains(Geöffnet):nth-of-type(2)").click();
+    cy.get("li:contains(Geöffnet):nth-of-type(3)").click();
 
-    cy.contains(secondClosestOpenPlace.title);
+    cy.contains(thirdClosestOpenPlace.title);
   });
 
   it("can be closed", () => {

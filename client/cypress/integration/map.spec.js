@@ -15,7 +15,7 @@ describe("Map", () => {
 
   it("allows selecting a place via tap, and immediately selecting a different one", () => {
     const firstPlace = places[0];
-    const secondPlace = places[2];
+    const secondPlace = places[3];
 
     cy.getMap().then(map => {
       cy.panTo(map, firstPlace);

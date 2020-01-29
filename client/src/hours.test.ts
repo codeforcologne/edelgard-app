@@ -23,6 +23,20 @@ describe("getOpenState", () => {
       false,
       undefined,
     ],
+    [
+      "handles perpetually open places",
+      "24/7",
+      "2020-01-20T18:30:00.000Z",
+      true,
+      undefined,
+    ],
+    [
+      "handles perpetually closed places",
+      "24/7 off",
+      "2020-01-20T18:30:00.000Z",
+      false,
+      undefined,
+    ],
   ])(
     "%s",
     (

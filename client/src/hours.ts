@@ -50,7 +50,15 @@ export const getOpenState = memoize((hours: string, date: Date): {
     if (newState !== state) {
       nextOpenOrClose = iterator.getDate();
     }
-    iterator.advance();
+    const hasAdvanced = iterator.advance();
+    if (!hasAdvanced) {
+      // there are no further changes,
+      // possibly because the place is always open or always closed
+      return {
+        state,
+        nextOpenOrClose: undefined,
+      };
+    }
   }
   return {
     state,
