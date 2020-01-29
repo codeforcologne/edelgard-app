@@ -20,6 +20,7 @@ import {
 } from "../hooks/useViewReducer";
 
 import LocationButton from "./LocationButton";
+import EmergencyButton from "./EmergencyButton";
 import { useViewState, useViewDispatch } from "./ViewContext";
 import PlaceView from "./PlaceView";
 import { fetchDirections } from "../api";
@@ -204,6 +205,7 @@ function RouteMap() {
             }}
             geolocationPermissionState={geolocationPermissionState}
           />
+          <EmergencyButton />
           <LocationButton
             location={location}
             geolocationPermissionState={geolocationPermissionState}
