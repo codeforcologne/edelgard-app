@@ -34,8 +34,8 @@ export default function DisclaimerDialog() {
       <DialogTitle id="alert-dialog-title">Hinweis</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Diese App ist ein <strong>Prototyp</strong> und verwendet Testdaten.
-          Sie ist noch nicht für den Ernstfall geeignet.
+          Diese App ist ein Vorabversion und verwendet teilweise Testdaten. Sie
+          ist noch nicht für den Ernstfall geeignet.
         </DialogContentText>
       </DialogContent>
       <DialogActions>

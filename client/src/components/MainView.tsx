@@ -18,7 +18,6 @@ import {
   ViewStateAction,
   hasPlace,
 } from "../hooks/useViewReducer";
-import DisclaimerDialog from "./DisclaimerDialog";
 
 import LocationButton from "./LocationButton";
 import { useViewState, useViewDispatch } from "./ViewContext";
@@ -179,7 +178,6 @@ function RouteMap() {
         height: "100rvh",
       }}
     >
-      <DisclaimerDialog />
       <Map
         places={places}
         suggestedPlaces={suggestedPlaces}
