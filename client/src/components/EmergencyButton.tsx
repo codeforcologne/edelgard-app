@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     top: theme.spacing(10),
     right: theme.spacing(2),
   },
-  "@media (min-width: 1024px), (min-height: 1024px)": {
+  "@media (min-device-width: 1024px), (min-device-height: 1024px)": {
     emergencyDialogButton: {
       display: "none",
     },
