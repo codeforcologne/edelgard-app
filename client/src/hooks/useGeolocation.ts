@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Sentry from "../api/sentry";
 
 const useGeolocation = (
   { enableHighAccuracy, maximumAge, timeout }: PositionOptions = {},
@@ -9,6 +10,11 @@ const useGeolocation = (
   const [error, setError] = useState<PositionError>();
   if (error) {
     console.error(error);
+    Sentry.withScope(scope => {
+      scope.setExtra("error.code", error.code);
+      scope.setExtra("error.message", error.message);
+      Sentry.captureException(error);
+    });
   }
 
   useEffect(() => {
