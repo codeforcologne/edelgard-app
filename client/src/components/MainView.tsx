@@ -26,7 +26,7 @@ import PlaceView from "./PlaceView";
 import { fetchDirections } from "../api";
 import useSuggestedPlaces from "../hooks/useSuggestedPlaces";
 import usePlaces from "../hooks/usePlaces";
-import { Longitude, Latitude, LngLat } from "../places";
+import { Longitude, Latitude, LngLat, Place } from "../places";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 
@@ -47,8 +47,9 @@ const throttle = <A extends unknown[]>(
 function setDirections(
   viewDispatch: React.Dispatch<ViewStateAction>,
   directions: Directions,
+  place: Place,
 ): void {
-  viewDispatch({ type: "SET_DIRECTIONS", directions });
+  viewDispatch({ type: "SET_DIRECTIONS", directions, place });
 }
 
 const cologneCathedral: LngLat = [6.958307 as Longitude, 50.941357 as Latitude];
@@ -164,9 +165,9 @@ function RouteMap() {
       const [locationLng, locationLat] = viewState.location;
       fetchDirections({ lng: locationLng, lat: locationLat }, viewState.place)
         .then(directions => {
-          throttledSetDirections(viewDispatch, directions);
+          throttledSetDirections(viewDispatch, directions, viewState.place);
         })
-        .catch(error => {
+        .catch(() => {
           setErrorMessage("Konnte Route nicht abrufen");
         });
     }
