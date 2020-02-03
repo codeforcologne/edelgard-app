@@ -28,6 +28,8 @@ import { fetchDirections } from "../api";
 import useSuggestedPlaces from "../hooks/useSuggestedPlaces";
 import usePlaces from "../hooks/usePlaces";
 import { Longitude, Latitude, LngLat } from "../places";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 const throttle = <A extends unknown[]>(
   func: (...args: A) => void,
@@ -146,6 +148,8 @@ function RouteMap() {
   const unthrottledHeading = useCompassHeading();
   const heading = useThrottle(unthrottledHeading, 20);
 
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
   const placeId = hasPlace(viewState) ? viewState.place.id : null;
   const throttledSetDirections = React.useMemo(
     () => throttle(setDirections, 5000),
@@ -164,7 +168,7 @@ function RouteMap() {
           throttledSetDirections(viewDispatch, directions);
         })
         .catch(error => {
-          throw error;
+          setErrorMessage("Konnte Route nicht abrufen");
         });
     }
   }, [viewState, viewDispatch, throttledSetDirections]);
@@ -218,6 +222,19 @@ function RouteMap() {
             }}
           />
         </>
+        {errorMessage && (
+          <Snackbar
+            open={Boolean(errorMessage)}
+            autoHideDuration={6000}
+            onClose={() => setErrorMessage(null)}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            style={{ marginTop: 100 }}
+          >
+            <Alert severity="error" variant="filled" color="warning">
+              {errorMessage}
+            </Alert>
+          </Snackbar>
+        )}
         <DebugInfo
           open={false}
           values={{

@@ -11,4 +11,6 @@ if (sentryDsn && process.env.NODE_ENV === "production") {
   Sentry.init({ dsn: sentryDsn });
 }
 
+export { Sentry };
+
 ReactDOM.render(<App />, document.getElementById("root"));
