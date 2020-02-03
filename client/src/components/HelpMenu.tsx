@@ -11,11 +11,26 @@ interface HelpDialogProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   anchorEl: HTMLButtonElement | undefined;
+  deferredPrompt: any | null;
+  clearDeferredPrompt: () => void;
 }
 
-export default function HelpMenu({ open, setOpen, anchorEl }: HelpDialogProps) {
+export default function HelpMenu({
+  open,
+  setOpen,
+  anchorEl,
+  deferredPrompt,
+  clearDeferredPrompt,
+}: HelpDialogProps) {
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const showInstallationPrompt = () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      clearDeferredPrompt();
+    }, console.warn);
   };
 
   return (
@@ -24,6 +39,14 @@ export default function HelpMenu({ open, setOpen, anchorEl }: HelpDialogProps) {
         <Paper>
           <ClickAwayListener onClickAway={handleClose}>
             <MenuList>
+              {deferredPrompt && (
+                <>
+                  <MenuItem onClick={showInstallationPrompt}>
+                    Als App installieren
+                  </MenuItem>
+                  <Divider />
+                </>
+              )}
               <MenuItem
                 component="a"
                 href="https://edelgard.koeln"

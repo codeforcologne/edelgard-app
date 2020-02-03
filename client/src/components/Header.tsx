@@ -11,6 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { useViewState } from "./ViewContext";
 import HelpMenu from "./HelpMenu";
+import Badge from "@material-ui/core/Badge";
+import usePrevious from "../hooks/usePrevious";
 
 const logoUrl = process.env.REACT_APP_LOGO_URL;
 
@@ -62,6 +64,40 @@ export default ({
 
   const anchorRef = React.useRef();
 
+  const [deferredPrompt, setDeferredPrompt] = React.useState<any | null>(null);
+  React.useEffect(() => {
+    const handler = (event: any) => {
+      event.preventDefault();
+      setDeferredPrompt(event);
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
+  });
+
+  const previousDeferredPrompt = usePrevious(deferredPrompt);
+  const [showInstallationBadge, setShowInstallationBadge] = React.useState(
+    false,
+  );
+  React.useEffect(() => {
+    let timeout: number | undefined;
+    if (deferredPrompt && deferredPrompt !== previousDeferredPrompt) {
+      setShowInstallationBadge(true);
+      timeout = window.setTimeout(() => {
+        setShowInstallationBadge(false);
+      }, 60000);
+    } else if (!deferredPrompt) {
+      setShowInstallationBadge(false);
+    }
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [deferredPrompt, previousDeferredPrompt]);
+
   return (
     <AppBar
       position="static"
@@ -89,12 +125,20 @@ export default ({
               onClick={() => setIsHelpMenuOpen(true)}
               ref={anchorRef as any}
             >
-              <HelpIcon />
+              {showInstallationBadge ? (
+                <Badge color="secondary" variant="dot">
+                  <HelpIcon />
+                </Badge>
+              ) : (
+                <HelpIcon />
+              )}
             </IconButton>
             <HelpMenu
               open={isHelpMenuOpen}
               setOpen={setIsHelpMenuOpen}
               anchorEl={anchorRef.current}
+              deferredPrompt={deferredPrompt}
+              clearDeferredPrompt={() => setDeferredPrompt(null)}
             />
             <Button
               variant="contained"
