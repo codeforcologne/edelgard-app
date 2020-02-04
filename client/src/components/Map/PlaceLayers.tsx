@@ -27,9 +27,29 @@ export default function PlaceLayers({
   onSelectPlace,
   currentTime,
 }: PlaceLayersProps) {
-  function isSelectedPlace(place: Place): boolean {
-    return place.id === selectedPlaceId;
-  }
+  const isSelectedPlace = React.useCallback(
+    (place: Place): boolean => place.id === selectedPlaceId,
+    [selectedPlaceId],
+  );
+
+  const closedPlaces = React.useMemo(
+    () => places.filter(place => !placeIsOpen(place, currentTime)),
+    [places, currentTime],
+  );
+  const unselectedOpenPlaces = React.useMemo(
+    () =>
+      places.filter(
+        place => !isSelectedPlace(place) && placeIsOpen(place, currentTime),
+      ),
+    [places, currentTime, isSelectedPlace],
+  );
+  const selectedOpenPlaces = React.useMemo(
+    () =>
+      places.filter(
+        place => isSelectedPlace(place) && placeIsOpen(place, currentTime),
+      ),
+    [places, currentTime, isSelectedPlace],
+  );
 
   return (
     <>
@@ -44,19 +64,17 @@ export default function PlaceLayers({
         }}
         images={images}
       >
-        {places
-          .filter(place => !placeIsOpen(place, currentTime))
-          .map(place => (
-            <Feature
-              coordinates={[place.lng, place.lat]}
-              onClick={() => {
-                onSelectPlace(place.id);
-              }}
-              onMouseEnter={(event: any) => setCursor("pointer", event.map)}
-              onMouseLeave={(event: any) => setCursor("", event.map)}
-              key={place.id}
-            />
-          ))}
+        {closedPlaces.map(place => (
+          <Feature
+            coordinates={[place.lng, place.lat]}
+            onClick={() => {
+              onSelectPlace(place.id);
+            }}
+            onMouseEnter={(event: any) => setCursor("pointer", event.map)}
+            onMouseLeave={(event: any) => setCursor("", event.map)}
+            key={place.id}
+          />
+        ))}
       </Layer>
       <Layer
         type="symbol"
@@ -76,27 +94,23 @@ export default function PlaceLayers({
         }}
         images={images}
       >
-        {places
-          .filter(
-            place => !isSelectedPlace(place) && placeIsOpen(place, currentTime),
-          )
-          .map(place => (
-            <Feature
-              coordinates={[place.lng, place.lat]}
-              onClick={() => {
-                onSelectPlace(place.id);
-              }}
-              onMouseEnter={(event: any) => setCursor("pointer", event.map)}
-              onMouseLeave={(event: any) => setCursor("", event.map)}
-              key={place.id}
-              properties={{
-                rank:
-                  (suggestedPlaces || []).findIndex(
-                    ([foundPlace]) => foundPlace.id === place.id,
-                  ) + 1 || "",
-              }}
-            />
-          ))}
+        {unselectedOpenPlaces.map(place => (
+          <Feature
+            coordinates={[place.lng, place.lat]}
+            onClick={() => {
+              onSelectPlace(place.id);
+            }}
+            onMouseEnter={(event: any) => setCursor("pointer", event.map)}
+            onMouseLeave={(event: any) => setCursor("", event.map)}
+            key={place.id}
+            properties={{
+              rank:
+                (suggestedPlaces || []).findIndex(
+                  ([foundPlace]) => foundPlace.id === place.id,
+                ) + 1 || "",
+            }}
+          />
+        ))}
       </Layer>
       <Layer
         type="symbol"
@@ -110,21 +124,17 @@ export default function PlaceLayers({
         }}
         images={images}
       >
-        {places
-          .filter(
-            place => isSelectedPlace(place) && placeIsOpen(place, currentTime),
-          )
-          .map(place => (
-            <Feature
-              coordinates={[place.lng, place.lat]}
-              onClick={() => {
-                onSelectPlace(place.id);
-              }}
-              onMouseEnter={(event: any) => setCursor("pointer", event.map)}
-              onMouseLeave={(event: any) => setCursor("", event.map)}
-              key={place.id}
-            />
-          ))}
+        {selectedOpenPlaces.map(place => (
+          <Feature
+            coordinates={[place.lng, place.lat]}
+            onClick={() => {
+              onSelectPlace(place.id);
+            }}
+            onMouseEnter={(event: any) => setCursor("pointer", event.map)}
+            onMouseLeave={(event: any) => setCursor("", event.map)}
+            key={place.id}
+          />
+        ))}
       </Layer>
     </>
   );
