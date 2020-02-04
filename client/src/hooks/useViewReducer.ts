@@ -125,7 +125,7 @@ export type ViewStateAction =
   | { type: "GO_TO_OVERVIEW" }
   | { type: "SELECT_PLACE"; place: Place }
   | { type: "UNSELECT_PLACE" }
-  | { type: "SET_DIRECTIONS"; directions: Directions };
+  | { type: "SET_DIRECTIONS"; directions: Directions; place: Place };
 
 const viewStateReducer = (
   state: ViewState,
@@ -210,7 +210,13 @@ const viewStateReducer = (
     }
 
     case "SET_DIRECTIONS": {
-      const { directions } = action;
+      const { directions, place } = action;
+      if (hasPlace(state) && state.place.id !== place.id) {
+        console.warn(
+          "Received directions do not match currently selected place",
+        );
+        return state;
+      }
       if (
         state.type === "previewPlace" ||
         state.type === "previewPlaceWithRoute"
