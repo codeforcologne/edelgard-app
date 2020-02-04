@@ -34,7 +34,6 @@ interface Waypoint {
 
 export interface Directions {
   routes: any[];
-  waypoints: Waypoint[];
 }
 
 // react-mapbox-gl requires zoom, bearing and pitch to be arrays
