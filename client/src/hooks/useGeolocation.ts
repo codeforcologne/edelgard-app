@@ -5,7 +5,7 @@ const useGeolocation = (
   { enableHighAccuracy, maximumAge, timeout }: PositionOptions = {},
   callback: (coordinates: Coordinates) => void = () => {},
   requestGeolocation: boolean = true,
-): Position | undefined => {
+): { position: Position | undefined; error: PositionError | undefined } => {
   const [position, setPosition] = useState<Position>();
   const [error, setError] = useState<PositionError>();
   if (error) {
@@ -34,7 +34,7 @@ const useGeolocation = (
     };
   }, [enableHighAccuracy, maximumAge, timeout, requestGeolocation]);
 
-  return position;
+  return { position, error };
 };
 
 export default useGeolocation;

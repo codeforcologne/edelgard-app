@@ -9,6 +9,7 @@
     "@rehooks/device-orientation": "^1.0.0",
     "@sentry/browser": "^5.11.2",
     "axios": "^0.19.0",
+    "browser-update": "^3.3.9",
     "date-fns": "^2.8.1",
     "haversine": "^1.1.1",
     "humanize-duration": "^3.21.0",
