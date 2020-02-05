@@ -56,6 +56,10 @@ export function register(config?: Config) {
         registerValidSW(swUrl, config);
       }
     });
+
+    navigator.serviceWorker.addEventListener("fetch", (event: any) => {
+      event.respondWith(fetch(event.request));
+    });
   }
 }
 
