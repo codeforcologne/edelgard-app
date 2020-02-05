@@ -52,6 +52,12 @@ function setDirections(
   viewDispatch({ type: "SET_DIRECTIONS", directions, place });
 }
 
+const reasonByPositionErrorCode = {
+  1: "Zugriff nicht genehmigt",
+  // 2: "Interner Fehler",
+  3: "Zeitüberschreitung",
+} as { [key: number]: string | undefined };
+
 const cologneCathedral: LngLat = [6.958307 as Longitude, 50.941357 as Latitude];
 const initialCenter = cologneCathedral;
 function RouteMap() {
@@ -74,11 +80,35 @@ function RouteMap() {
     boolean
   >(false);
 
-  let geolocation: Position | undefined = useGeolocation(
+  const {
+    position: geolocation,
+    error: geolocationError,
+  }: {
+    position: Position | undefined;
+    error: PositionError | undefined;
+  } = useGeolocation(
     undefined,
     undefined,
     geolocationPermissionState === "granted" || hasRequestedLocation,
   );
+
+  React.useEffect(() => {
+    const reason = geolocationError
+      ? reasonByPositionErrorCode[geolocationError.code]
+      : undefined;
+    if (geolocationError) {
+      setErrorMessage(
+        <>
+          Eigener Standort ist nicht verfügbar
+          {reason && (
+            <>
+              <br />({reason})
+            </>
+          )}
+        </>,
+      );
+    }
+  }, [geolocationError]);
 
   let location: LngLat | null;
   location = React.useMemo(() => {
@@ -148,7 +178,10 @@ function RouteMap() {
   const unthrottledHeading = useCompassHeading();
   const heading = useThrottle(unthrottledHeading, 20);
 
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [
+    errorMessage,
+    setErrorMessage,
+  ] = React.useState<React.ReactNode | null>(null);
 
   const placeId = hasPlace(viewState) ? viewState.place.id : null;
   const throttledSetDirections = React.useMemo(
