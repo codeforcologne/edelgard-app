@@ -7,21 +7,18 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 
-export default function FacebookWarning() {
-  function isFacebookApp() {
-    var ua = navigator.userAgent || navigator.vendor;
-    return (
-      typeof ua === "string" &&
-      (ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1)
-    );
-  }
+function checkForFacebookApp() {
+  var ua = navigator.userAgent || navigator.vendor;
+  return (
+    typeof ua === "string" &&
+    (ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1)
+  );
+}
 
-  const [showWarning, setShowWarning] = React.useState(false);
-  React.useEffect(() => {
-    if (isFacebookApp()) {
-      setShowWarning(true);
-    }
-  }, []);
+const isFacebookApp = checkForFacebookApp();
+
+export default function FacebookWarning() {
+  const [showWarning, setShowWarning] = React.useState(isFacebookApp);
 
   const closeWarning = () => setShowWarning(false);
 
