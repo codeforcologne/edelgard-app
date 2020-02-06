@@ -27,6 +27,7 @@ import { fetchDirections } from "../api";
 import useSuggestedPlaces from "../hooks/useSuggestedPlaces";
 import usePlaces from "../hooks/usePlaces";
 import { Longitude, Latitude, LngLat, Place } from "../places";
+import FacebookWarning from "./FacebookWarning";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 
@@ -217,6 +218,7 @@ function RouteMap() {
         height: "100rvh",
       }}
     >
+      <FacebookWarning />
       <Map
         places={places}
         suggestedPlaces={suggestedPlaces}
