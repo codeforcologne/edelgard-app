@@ -142,9 +142,12 @@ export default ({
             />
             <Button
               variant="contained"
-              color="secondary"
+              color={
+                geolocationPermissionState === "denied"
+                  ? "default"
+                  : "secondary"
+              }
               onClick={suggestPlaces}
-              disabled={geolocationPermissionState === "denied"}
               className={classes.searchButton}
             >
               Schutz suchen
