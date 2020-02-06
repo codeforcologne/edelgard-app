@@ -294,6 +294,7 @@ function RouteMap() {
           }}
           suggestedPlaces={suggestedPlaces}
           currentTime={currentTime}
+          geolocationPermissionState={geolocationPermissionState}
         />
       </Drawer>
     </Div100vh>
