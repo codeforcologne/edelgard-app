@@ -29,6 +29,7 @@ import usePlaces from "../hooks/usePlaces";
 import { Longitude, Latitude, LngLat, Place } from "../places";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import FacebookWarning from "./FacebookWarning";
 
 const throttle = <A extends unknown[]>(
   func: (...args: A) => void,
@@ -217,7 +218,7 @@ function RouteMap() {
         height: "100rvh",
       }}
     >
-      <DisclaimerDialog />
+      <FacebookWarning />
       <Map
         places={places}
         suggestedPlaces={suggestedPlaces}
