@@ -45,12 +45,14 @@ interface PlaceDetailProps {
   place: Place;
   currentTime: Date;
   directions: Directions | null;
+  geolocationPermissionState: PermissionState | undefined;
 }
 
 export default function PlaceDetail({
   place,
   currentTime,
   directions,
+  geolocationPermissionState,
 }: PlaceDetailProps): JSX.Element {
   const viewDispatch = useViewDispatch();
 
@@ -117,6 +119,7 @@ export default function PlaceDetail({
         <Button
           onClick={() => viewDispatch({ type: "SUGGEST_PLACES" })}
           fullWidth
+          disabled={geolocationPermissionState !== "granted"}
         >
           Weitere Orte
           <ExpandMoreIcon />

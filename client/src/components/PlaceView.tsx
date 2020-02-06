@@ -9,12 +9,14 @@ interface PlaceViewProps {
   suggestedPlaces: [Place, number][] | null;
   selectPlace: (placeId: string | null) => void;
   currentTime: Date;
+  geolocationPermissionState: PermissionState | undefined;
 }
 
 export default ({
   suggestedPlaces,
   selectPlace,
   currentTime,
+  geolocationPermissionState,
 }: PlaceViewProps): JSX.Element | null => {
   const viewState = useViewState();
 
@@ -26,6 +28,7 @@ export default ({
           place={viewState.place}
           directions={null}
           currentTime={currentTime}
+          geolocationPermissionState={geolocationPermissionState}
         />
       );
     }
@@ -37,6 +40,7 @@ export default ({
           place={viewState.place}
           directions={viewState.directions}
           currentTime={currentTime}
+          geolocationPermissionState={geolocationPermissionState}
         />
       );
     }
