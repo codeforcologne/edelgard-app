@@ -54,7 +54,7 @@ function setDirections(
 }
 
 const reasonByPositionErrorCode = {
-  1: "Zugriff nicht genehmigt",
+  1: "Zugriff wurde durch den Browser verweigert",
   // 2: "Interner Fehler",
   3: "Zeitüberschreitung",
 } as { [key: number]: string | undefined };
@@ -100,7 +100,7 @@ function RouteMap() {
     if (geolocationError) {
       setErrorMessage(
         <>
-          Eigener Standort ist nicht verfügbar
+          Ihr Standort konnte nicht ermittelt werden.
           {reason && (
             <>
               <br />({reason})
@@ -237,6 +237,16 @@ function RouteMap() {
         <>
           <Header
             suggestPlaces={() => {
+              // if (geolocationPermissionState === "denied") {
+              //   setErrorMessage(
+              //     <>
+              //       Ihr Standort konnte nicht ermittelt werden.
+              //       <br />
+              //       Zugriff wurde durch Browser verweigert
+              //     </>,
+              //   );
+              //   return;
+              // }
               setHasRequestedLocation(true);
               setHasRequestedSearch(true);
             }}
