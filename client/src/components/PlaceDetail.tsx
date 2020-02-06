@@ -119,7 +119,7 @@ export default function PlaceDetail({
         <Button
           onClick={() => viewDispatch({ type: "SUGGEST_PLACES" })}
           fullWidth
-          disabled={geolocationPermissionState !== "granted"}
+          disabled={geolocationPermissionState === "denied"}
         >
           Weitere Orte
           <ExpandMoreIcon />
