@@ -13,6 +13,8 @@ interface HelpDialogProps {
   anchorEl: HTMLButtonElement | undefined;
   deferredPrompt: any | null;
   clearDeferredPrompt: () => void;
+  orientationPermissionState: string | undefined;
+  requestOrientationPermission: () => void;
 }
 
 export default function HelpMenu({
@@ -21,6 +23,8 @@ export default function HelpMenu({
   anchorEl,
   deferredPrompt,
   clearDeferredPrompt,
+  orientationPermissionState,
+  requestOrientationPermission,
 }: HelpDialogProps) {
   const handleClose = () => {
     setOpen(false);
@@ -43,6 +47,14 @@ export default function HelpMenu({
                 <>
                   <MenuItem onClick={showInstallationPrompt}>
                     Als App installieren
+                  </MenuItem>
+                  <Divider />
+                </>
+              )}
+              {orientationPermissionState === "required" && (
+                <>
+                  <MenuItem onClick={requestOrientationPermission}>
+                    Richtungsanzeige aktivieren
                   </MenuItem>
                   <Divider />
                 </>

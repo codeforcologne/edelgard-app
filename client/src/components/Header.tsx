@@ -43,12 +43,16 @@ interface HeaderProps {
   suggestPlaces: () => void;
   goToOverview: () => void;
   geolocationPermissionState: PermissionState | undefined;
+  orientationPermissionState: string | undefined;
+  requestOrientationPermission: () => void;
 }
 
 export default ({
   suggestPlaces,
   goToOverview,
   geolocationPermissionState,
+  orientationPermissionState,
+  requestOrientationPermission,
 }: HeaderProps) => {
   const viewState = useViewState();
 
@@ -134,6 +138,8 @@ export default ({
               anchorEl={anchorRef.current}
               deferredPrompt={deferredPrompt}
               clearDeferredPrompt={() => setDeferredPrompt(null)}
+              orientationPermissionState={orientationPermissionState}
+              requestOrientationPermission={requestOrientationPermission}
             />
             <Button
               variant="contained"

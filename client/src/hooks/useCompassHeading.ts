@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
 type DeviceOrientationEventWebkit = DeviceOrientationEvent & {
   webkitCompassHeading: number;
@@ -61,10 +61,45 @@ function compassHeadingFromEvent(
   return null;
 }
 
-export default function useCompassHeading() {
+// iOS 13+
+const requestPermissionExists =
+  typeof DeviceOrientationEvent !== "undefined" &&
+  typeof (DeviceOrientationEvent as any).requestPermission === "function";
+
+export default function useCompassHeading(): {
+  heading: number | null;
+  orientationPermissionState: string | undefined;
+  requestOrientationPermission: () => void;
+} {
   const [heading, setHeading] = useState<number | null>(null);
 
+  // iOS 13+
+  const [orientationPermissionState, setOrientationPermissionState] = useState<
+    string | undefined
+  >(requestPermissionExists ? "not-checked" : "not-required");
+  const requestOrientationPermission = useCallback(() => {
+    (DeviceOrientationEvent as any)
+      .requestPermission()
+      .then(setOrientationPermissionState)
+      .catch((error: any) => {
+        // Permission hasn't yet been granted or denied
+        // and this function was not called from a user action.
+        // We need to show a button for requesting the permission.
+        setOrientationPermissionState("required");
+        console.error(error);
+      });
+  }, []);
+
   useEffect(() => {
+    if (
+      requestPermissionExists &&
+      orientationPermissionState === "not-checked"
+    ) {
+      // iOS 13+
+      setOrientationPermissionState("checking");
+      requestOrientationPermission();
+    }
+
     const handleEvent = (
       event: DeviceOrientationEvent | DeviceOrientationEventWebkit,
     ) => {
@@ -86,7 +121,15 @@ export default function useCompassHeading() {
         window.removeEventListener("deviceorientation", handleEvent);
       };
     }
-  }, []);
+  }, [orientationPermissionState]);
 
-  return heading;
+  const result = useMemo(
+    () => ({
+      heading,
+      orientationPermissionState,
+      requestOrientationPermission,
+    }),
+    [heading, orientationPermissionState, requestOrientationPermission],
+  );
+  return result;
 }
