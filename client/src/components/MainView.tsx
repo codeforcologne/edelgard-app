@@ -177,7 +177,11 @@ function RouteMap() {
   }, [viewState, previousViewState, viewDispatch, location, previousLocation]);
 
   const unthrottledHeading = useCompassHeading();
-  const heading = useThrottle(unthrottledHeading, 20);
+  const {
+    heading,
+    orientationPermissionState,
+    requestOrientationPermission,
+  } = useThrottle(unthrottledHeading, 20);
 
   const [
     errorMessage,
@@ -244,6 +248,8 @@ function RouteMap() {
               viewDispatch({ type: "GO_TO_OVERVIEW" });
             }}
             geolocationPermissionState={geolocationPermissionState}
+            orientationPermissionState={orientationPermissionState}
+            requestOrientationPermission={requestOrientationPermission}
           />
           <EmergencyButton />
           <LocationButton
