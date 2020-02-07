@@ -15,6 +15,7 @@ interface HelpDialogProps {
   clearDeferredPrompt: () => void;
   orientationPermissionState: string | undefined;
   requestOrientationPermission: () => void;
+  positionError: PositionError | undefined;
 }
 
 export default function HelpMenu({
@@ -25,6 +26,7 @@ export default function HelpMenu({
   clearDeferredPrompt,
   orientationPermissionState,
   requestOrientationPermission,
+  positionError,
 }: HelpDialogProps) {
   const handleClose = () => {
     setOpen(false);
@@ -51,7 +53,7 @@ export default function HelpMenu({
                   <Divider />
                 </>
               )}
-              {orientationPermissionState === "required" && (
+              {orientationPermissionState === "required" && !positionError && (
                 <>
                   <MenuItem onClick={requestOrientationPermission}>
                     Richtungsanzeige aktivieren

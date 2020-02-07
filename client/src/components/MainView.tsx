@@ -83,7 +83,7 @@ function RouteMap() {
 
   const {
     position: geolocation,
-    error: geolocationError,
+    error: positionError,
   }: {
     position: Position | undefined;
     error: PositionError | undefined;
@@ -94,10 +94,10 @@ function RouteMap() {
   );
 
   React.useEffect(() => {
-    const reason = geolocationError
-      ? reasonByPositionErrorCode[geolocationError.code]
+    const reason = positionError
+      ? reasonByPositionErrorCode[positionError.code]
       : undefined;
-    if (geolocationError) {
+    if (positionError) {
       setErrorMessage(
         <>
           Ihr Standort konnte nicht ermittelt werden.
@@ -109,7 +109,7 @@ function RouteMap() {
         </>,
       );
     }
-  }, [geolocationError]);
+  }, [positionError]);
 
   let location: LngLat | null;
   location = React.useMemo(() => {
@@ -250,6 +250,7 @@ function RouteMap() {
             geolocationPermissionState={geolocationPermissionState}
             orientationPermissionState={orientationPermissionState}
             requestOrientationPermission={requestOrientationPermission}
+            positionError={positionError}
           />
           <EmergencyButton />
           <LocationButton
