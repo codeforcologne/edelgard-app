@@ -45,6 +45,7 @@ interface HeaderProps {
   geolocationPermissionState: PermissionState | undefined;
   orientationPermissionState: string | undefined;
   requestOrientationPermission: () => void;
+  positionError: PositionError | undefined;
 }
 
 export default ({
@@ -53,6 +54,7 @@ export default ({
   geolocationPermissionState,
   orientationPermissionState,
   requestOrientationPermission,
+  positionError,
 }: HeaderProps) => {
   const viewState = useViewState();
 
@@ -124,7 +126,8 @@ export default ({
               onClick={() => setIsHelpMenuOpen(true)}
               ref={anchorRef as any}
             >
-              {showInstallationBadge ? (
+              {showInstallationBadge ||
+              (orientationPermissionState === "required" && !positionError) ? (
                 <Badge color="secondary" variant="dot">
                   <HelpIcon />
                 </Badge>
@@ -140,6 +143,7 @@ export default ({
               clearDeferredPrompt={() => setDeferredPrompt(null)}
               orientationPermissionState={orientationPermissionState}
               requestOrientationPermission={requestOrientationPermission}
+              positionError={positionError}
             />
             <Button
               variant="contained"
