@@ -1,4 +1,4 @@
-const placesEndpoint = "https://edelgard-api-test.netlify.com/places.json";
+const placesEndpoint = "https://edelgard-api-test.netlify.app/places.json";
 
 const stubGeolocation = (windowObj, coords) => {
   cy.stub(windowObj.navigator.permissions, "query").callsFake(
