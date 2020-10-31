@@ -8,25 +8,17 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 
 export default function DisclaimerDialog() {
-  const storageKey = "hasConfirmedTestDisclaimer";
-  const [
-    hasConfirmedTestDisclaimer,
-    setHasConfirmedTestDisclaimer,
-  ] = React.useState<boolean>(
-    () => window.localStorage.getItem(storageKey) === "true",
-  );
-
-  React.useEffect(() => {
-    window.localStorage.setItem(storageKey, String(hasConfirmedTestDisclaimer));
-  }, [hasConfirmedTestDisclaimer]);
+  const [hasConfirmedDisclaimer, setHasConfirmedDisclaimer] = React.useState<
+    boolean
+  >(false);
 
   const handleClose = () => {
-    setHasConfirmedTestDisclaimer(true);
+    setHasConfirmedDisclaimer(true);
   };
 
   return (
     <Dialog
-      open={!hasConfirmedTestDisclaimer}
+      open={!hasConfirmedDisclaimer}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       data-testid="disclaimer"
@@ -34,8 +26,15 @@ export default function DisclaimerDialog() {
       <DialogTitle id="alert-dialog-title">Hinweis</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Diese App ist ein Vorabversion und verwendet teilweise Testdaten. Sie
-          ist noch nicht für den Ernstfall geeignet.
+          Das <strong>EDELGARD mobil</strong> ist am 11.11. #diesmalnicht im
+          Einsatz.
+          <br />
+          Wir sind am 11.11.2020 von 14 bis 1 Uhr per Telefon erreichbar.
+          <br />
+          Hotline: <a href="tel:+4922122127777">0221 / 221-27777</a>.{" "}
+          <a href="https://edelgard.koeln/edelgard-schuetzt-und-mobil/#termine">
+            www.edelgard.koeln
+          </a>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
