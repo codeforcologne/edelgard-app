@@ -121,7 +121,7 @@ export default function useCompassHeading(): {
         window.removeEventListener("deviceorientation", handleEvent);
       };
     }
-  }, [orientationPermissionState]);
+  }, [orientationPermissionState, requestOrientationPermission]);
 
   const result = useMemo(
     () => ({
