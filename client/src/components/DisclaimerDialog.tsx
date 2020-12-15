@@ -8,9 +8,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 
 export default function DisclaimerDialog() {
-  const [hasConfirmedDisclaimer, setHasConfirmedDisclaimer] = React.useState<
-    boolean
-  >(false);
+  const [
+    hasConfirmedDisclaimer,
+    setHasConfirmedDisclaimer,
+  ] = React.useState<boolean>(false);
 
   const handleClose = () => {
     setHasConfirmedDisclaimer(true);
