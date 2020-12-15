@@ -215,9 +215,6 @@ function RouteMap() {
 
   const selectedPlaceId = hasPlace(viewState) ? viewState.place.id : null;
 
-  const now = new Date();
-  const novemberIndex = 10;
-
   return (
     <Div100vh
       style={{
@@ -227,9 +224,7 @@ function RouteMap() {
         height: "100rvh",
       }}
     >
-      {now.getFullYear() === 2020 &&
-        now.getMonth() === novemberIndex &&
-        now.getDate() < 13 && <DisclaimerDialog />}
+      <DisclaimerDialog />
       <FacebookWarning />
       <Map
         places={places}
