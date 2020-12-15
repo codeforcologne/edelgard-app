@@ -37,7 +37,7 @@ const throttle = <A extends unknown[]>(
   limit: number,
 ): ((...args: A) => void) => {
   let inThrottle = false;
-  return function(this: unknown, ...args: A): void {
+  return function (this: unknown, ...args: A): void {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
@@ -78,9 +78,10 @@ function RouteMap() {
       );
   }
 
-  const [hasRequestedLocation, setHasRequestedLocation] = React.useState<
-    boolean
-  >(false);
+  const [
+    hasRequestedLocation,
+    setHasRequestedLocation,
+  ] = React.useState<boolean>(false);
 
   const {
     position: geolocation,
