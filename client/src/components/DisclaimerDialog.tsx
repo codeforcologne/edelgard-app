@@ -6,6 +6,17 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  edelgardTypography: {
+    fontFamily: '"Open Sans Condensed", Helvetica, Arial, Verdana, sans-serif',
+    color: "black",
+  },
+  link: {
+    color: theme.palette.secondary.main,
+  },
+}));
 
 export default function DisclaimerDialog() {
   const [
@@ -17,6 +28,8 @@ export default function DisclaimerDialog() {
     setHasConfirmedDisclaimer(true);
   };
 
+  const classes = useStyles();
+
   return (
     <Dialog
       open={!hasConfirmedDisclaimer}
@@ -27,41 +40,24 @@ export default function DisclaimerDialog() {
       <DialogTitle id="alert-dialog-title">Hinweis</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Leider sind fast alle unserer{" "}
-          <span
-            style={{
-              fontFamily:
-                '"Open Sans Condensed", Helvetica, Arial, Verdana, sans-serif',
-              color: "black",
-            }}
-          >
-            EDELGARD schützt
-          </span>{" "}
-          Orte zurzeit geschlossen und können euch nicht den gewohnten Schutz
-          bieten. Die aktuellen Öffnungszeiten können wir angesichts der rapiden
-          Entwicklung leider nicht pflegen.
+          Leider sind durch die coronabedingten Einschränkungen einige unserer{" "}
+          <span className={classes.edelgardTypography}>EDELGARD schützt</span>{" "}
+          Orte vorübergehend anders oder gar nicht geöffnet. Im Notfall könnt
+          ihr auch – je nach Situation – Passant*innen ansprechen oder in
+          irgendeinem geöffneten Laden in der Nähe um Hilfe bitten.
           <br />
-          Passt auf euch auf und wählt im Zweifel bitte den Notruf 110.
-          <br />
-          <br />
-          An Silvester ist die{" "}
-          <span
-            style={{
-              fontFamily:
-                '"Open Sans Condensed", Helvetica, Arial, Verdana, sans-serif',
-              color: "black",
-            }}
-          >
-            EDELGARD mobil
-          </span>{" "}
-          Hotline von 22 bis 1 Uhr für Euch erreichbar. Telefon{" "}
-          <a
-            href="tel:+4922122127777"
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            0221 / 221-27777
+          Wenn ihr dann nicht mehr alleine und/oder an einem geschützten Ort
+          seid, könnt ihr das Hilfetelefon Gewalt gegen Frauen anrufen (24/7
+          kostenlos unter{" "}
+          <a href="tel:+498000116016" className={classes.link}>
+            08000 116 016
+          </a>{" "}
+          erreichbar) und mit den Beraterinnen die nächsten Schritte besprechen.
+          Wenn ihr eine Anzeige machen wollt, ruft bitte direkt die Polizei (
+          <a href="tel:110" className={classes.link}>
+            110
           </a>
-          .
+          ) an.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
